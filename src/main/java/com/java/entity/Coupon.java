@@ -38,6 +38,66 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+<<<<<<< HEAD
+=======
+	// couponCount ,couponrepo
+	@NamedNativeQuery(
+			name = "countByKeywordLike",
+			query = "SELECT count(*) FROM coupon as c, food as f"
+				+ "WHERE c.food_code = f.coupon_code "
+				+ "AND coupon_name like %:keyword%"
+				+ "OR food_name like %:keyword%"
+				+ "OR food_kind like %:keyword%"
+				+ "OR food_menu like %:keyword%"
+				+ "OR food_tag like %:keyword%",
+				resultSetMapping = "countByKeywordLike"
+			)
+	@SqlResultSetMapping(
+		    name = "countByKeywordLike",
+		    classes = @ConstructorResult(
+		        targetClass = SearchFoodDto.class,
+		        columns = {
+		            @ColumnResult(name = "coupon_name", type = String.class),
+		            @ColumnResult(name = "food_name", type = String.class),
+		            @ColumnResult(name = "food_kind", type = String.class),
+		            @ColumnResult(name = "food_menu", type = String.class),
+		            @ColumnResult(name = "food_tag", type = String.class)
+		            
+		        }
+		    )
+		)
+
+	
+	// couponList, couponrepo
+	@NamedNativeQuery(
+		name = "findByKeywordLike",
+		query =  "SELECT * FROM coupon c, food f, image i "
+			+ "WHERE c.coupon_code = f.coupon_code "
+			+ "AND c.coupon_code = i.refer_code(+)"
+			+ "AND coupon_name like %:keyword%"
+			+ "OR food_name like %:keyword%"
+			+ "OR food_kind like %:keyword%"
+			+ "OR food_menu like %:keyword%"
+			+ "OR food_tag like %:keyword%"
+			+ "ORDERBY c.coupon_salerate DESC"
+			)
+	@SqlResultSetMapping(
+		    name = "findByKeywordLike",
+		    classes = @ConstructorResult(
+		        targetClass = SearchFoodDto.class,
+		        columns = {
+		            @ColumnResult(name = "coupon_name", type = String.class),
+		            @ColumnResult(name = "food_name", type = String.class),
+		            @ColumnResult(name = "food_kind", type = String.class),
+		            @ColumnResult(name = "food_menu", type = String.class),
+		            @ColumnResult(name = "food_tag", type = String.class)
+		            
+		        }
+		    )
+		)
+
+
+>>>>>>> refs/remotes/origin/master
 
 public class Coupon {
 
