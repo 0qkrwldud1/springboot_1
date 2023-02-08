@@ -22,13 +22,20 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 			name = "findByKeywordLike")
 	List<SearchCouponDto> findByKeywordLike(@Param("keyword") String keyword);
 	
+	// countQuery 쿼리전체개수세기 페이징처리용
 	@Query(nativeQuery = true ,
 			value = "select * from (" +
-                    "select a.id, a.name from test_table_a a left join test_table_b b on b.id = a.id where 조건절 union " +
-                    "select c.id, c.name from test_table_c c left join test_table_d d on d.id = c.id where 조건절) e",
+                    "select a.id, a.name from test_table_a a "
+                    + "left join test_table_b b on b.id = a.id "
+                    + "where 조건절 union " +
+                    "select c.id, c.name from test_table_c c "
+                    + "left join test_table_d d on d.id = c.id where 조건절) e",
             countQuery = "select * from (" +
-                    "select a.id, a.name from test_table_a a left join test_table_b b on b.id = a.id where 조건절 union " +
-                    "select c.id, c.name from test_table_c c left join test_table_d d on d.id = c.id where 조건절) e")
+                    "select a.id, a.name from test_table_a a "
+                    + "left join test_table_b b on b.id = a.id "
+                    + "where 조건절 union " +
+                    "select c.id, c.name from test_table_c c "
+                    + "left join test_table_d d on d.id = c.id where 조건절) e")
    // PageImpl<Entity명> findBySomething(LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable);
 
 }
