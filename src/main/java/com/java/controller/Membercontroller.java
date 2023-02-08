@@ -29,12 +29,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/member/*")
 public class Membercontroller {
 	
-<<<<<<< HEAD
+
 	@Autowired
 	private MemberService memberService;
-=======
-	private final MemberService memberService;
->>>>>>> refs/remotes/origin/master
+
 	
 	//@Autowired
 	//private NaverLoginManager naverLoginManager;

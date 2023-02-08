@@ -38,8 +38,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-<<<<<<< HEAD
-=======
+
 	// couponCount ,couponrepo
 	@NamedNativeQuery(
 			name = "countByKeywordLike",
@@ -97,7 +96,7 @@ import lombok.ToString;
 		)
 
 
->>>>>>> refs/remotes/origin/master
+
 
 public class Coupon {
 

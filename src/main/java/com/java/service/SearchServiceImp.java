@@ -53,7 +53,7 @@ public class SearchServiceImp implements SearchService {
 		}
 		
 		// 쿠폰 수
-<<<<<<< HEAD
+
 		int couponCount = foodRepository.countByKeywordLike(keyword);
 		//int couponCount = searchDao.couponCount(keyword);
 		//JejuAspect.logger.info(JejuAspect.logMsg + couponCount);
@@ -61,15 +61,7 @@ public class SearchServiceImp implements SearchService {
 		List<SearchCouponDto> couponList = new ArrayList<SearchCouponDto>();
 		if (couponCount > 0) {
 			couponList = foodRepository.findByKeywordLike(keyword);
-=======
-		int couponCount = couponRepository.countByKeywordLike(keyword);
-		//int couponCount = searchDao.couponCount(keyword);
-		//JejuAspect.logger.info(JejuAspect.logMsg + couponCount);
-		
-		List<SearchCouponDto> couponList = new ArrayList<SearchCouponDto>();
-		if (couponCount > 0) {
-			couponList = couponRepository.findByKeywordLike(keyword);
->>>>>>> refs/remotes/origin/master
+
 			//couponList = searchDao.couponList(keyword);
 		}
 		//JejuAspect.logger.info(JejuAspect.logMsg + couponList.size());
