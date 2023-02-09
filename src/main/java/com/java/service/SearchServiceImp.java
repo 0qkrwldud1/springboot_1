@@ -72,7 +72,7 @@ public class SearchServiceImp implements SearchService {
 		mav.setViewName("search/search.tiles");
 	}
 	
-	/*
+	
 	// 음식점 목록
 	@Override
 	public String foodList(ModelAndView mav) {
@@ -84,7 +84,24 @@ public class SearchServiceImp implements SearchService {
 		String pageNumber = (String) map.get("pageNumber");
 		//JejuAspect.logger.info(JejuAspect.logMsg + tagValue + " || " + tagType);
 		
-		int count = searchDao.tagListCount(tagValue, tagType);
+		//Map<String, Object> map = new HashMap<String, Object>();
+		map.put("tagValue", tagValue);
+		map.put("tagType", tagType);
+		
+		int count = 0;
+		
+		if (tagValue.equals("adrr")) {
+			count = foodRepository.addrtagListCount(tagValue, tagType);
+		} else if ( tagValue.equals("menu") ) {
+			count = foodRepository.menutagListCount(tagValue, tagType);
+		} else if ( tagValue.equals("kind") ) {
+			count = foodRepository.kindtagListCount(tagValue, tagType);
+		} else if ( tagValue.equals("area") ) {
+			count = foodRepository.areatagListCount(tagValue, tagType);
+		} else if ( tagValue.equals("tag") ) {
+			count = foodRepository.tagtagListCount(tagValue, tagType);
+		} 
+		
 		//JejuAspect.logger.info(JejuAspect.logMsg + "tagListCount: " + count);
 		
 		if (pageNumber == null)
@@ -97,13 +114,22 @@ public class SearchServiceImp implements SearchService {
 			endRow = count;
 		}
 
+		
 
 		List<SearchFoodDto> foodList = new ArrayList<SearchFoodDto>();
+		
 		if (count > 0 && count >= startRow) {
-			foodList = searchDao.tagList(tagValue, tagType, startRow, endRow);
+			foodList = foodRepository.tagList(tagValue, tagType, startRow, endRow);
 			//JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
 		}
+		
 
+		map.put("tagValue", tagValue);
+		map.put("tagType", tagType);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		
+		
 		JSONArray arr = new JSONArray();
 		for(SearchFoodDto sFoodDto : foodList) {
 			HashMap<String, Object> jMap = new HashMap<String, Object>();
@@ -124,7 +150,7 @@ public class SearchServiceImp implements SearchService {
 		return jsonText;
 	}
 	
-	
+	/*
 	@Override
 	public String keywordAuto(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -145,7 +171,7 @@ public class SearchServiceImp implements SearchService {
 		
 		return jsonText;
 	}
-	*/
+	
 
 	//@Override
 	public int searchCount(ModelAndView mav) {
@@ -170,6 +196,7 @@ public class SearchServiceImp implements SearchService {
 		return searchCount;
 	}
 
+	
 	//@Override
 	public String searchResult(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();

@@ -4,20 +4,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 public interface SearchService {
 
-	static void searchKeyword(ModelAndView mav) {
-	}
+	void searchKeyword(ModelAndView mav);
 	
-	//String foodList(ModelAndView mav);
+	String foodList(ModelAndView mav);
 
 	//String keywordAuto(ModelAndView mav);
 
-	static int searchCount(ModelAndView mav) {
-		return 0;
-	}
+	//int searchCount(ModelAndView mav) ;
 
-	static String searchResult(ModelAndView mav) {
-		return null;
-	}
+	//String searchResult(ModelAndView mav) ;
 
 	//String popularList(ModelAndView mav);
 
