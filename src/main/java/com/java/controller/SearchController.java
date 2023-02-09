@@ -114,7 +114,7 @@ public class SearchController {
 		}
 	}
 	
-	*/
+	
 	
 	// 키워드 검색
 	@RequestMapping(value="/search.go", method= RequestMethod.GET)
@@ -181,7 +181,7 @@ public class SearchController {
 		}	
 	}
 	
-	/*
+	
 	// 키워드 자동완성 AJAX
 	@RequestMapping(value = "/searchAutoAjax.do")
 	@ResponseBody
