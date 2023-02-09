@@ -43,13 +43,13 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
-    @ManyToOne(fetch = FetchType.LAZY)
+    //@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_code")
-    private Member membercode;
+    private String membercode;
 		
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="food_code")
-    private Food foodcode;  
+    private String foodcode;  
 
     @CreationTimestamp
 	@Temporal(TemporalType.DATE)

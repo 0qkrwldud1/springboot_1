@@ -3,6 +3,7 @@ package com.java.repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +30,22 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long>{
 	
     @Query(value = "select count(*) from favorite where member_code = :membercode and food_code = :foodcode"
     		,nativeQuery = true)
-   int countBymembercodeAndfoodcode(@Param("membercode") String membercode, @Param("foodcode") String foodcode);
+    int countBymembercodeAndfoodcode(@Param("membercode") String membercode, @Param("foodcode") String foodcode);
     
     
     @Query(value = "select count(*) from favorite where member_code = :membercode and food_code = :foodcode"
     		,nativeQuery = true)
-    int countAfterBymembercodeAndfoodcode(@Param("membercode") String membercode, @Param("foodcode") String foodcode, 
-    		String favorStatus);
+    int countAfterBymembercodeAndfoodcode(@Param("membercode") String membercode, @Param("foodcode") String foodcode);
    
     
     @Query(value = "delete from favorite where food_code = :foodcode"
     		,nativeQuery = true)
     int deleteByfoodcode(@Param("foodcode")String foodcode);
 
-    @Transactional
-    @Modifying
+   
     @Query(value = "insert into from favorite values (member_code = :membercode, food_code = :foodcode) "
     		, nativeQuery = true)
-    void insertByfoodcode(@Param("membercode")String membercode, @Param("foodcode")String foodcode);
+    int insertByfoodcode(@Param("membercode")String membercode, @Param("foodcode")String foodcode);
     
    
     Favorite findByfoodcode(String foodcode);

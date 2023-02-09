@@ -2,6 +2,7 @@ package com.java.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -67,7 +68,7 @@ public class FavoriteServiceImp implements FavoriteService {
 			FavoriteRepository.insertByfoodcode(foodcode, membercode);
 		}
 		
-		int countAfter = FavoriteRepository.countAfterBymembercodeAndfoodcode(membercode, foodcode, favorStatus);
+		int countAfter = FavoriteRepository.countAfterBymembercodeAndfoodcode(membercode, foodcode);
 		
 		int check = countAfter;
 		//int check = FavoriteRepository.favorSwitch(memberCode, foodCode, favorStatus);
