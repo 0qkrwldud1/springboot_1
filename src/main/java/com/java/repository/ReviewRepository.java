@@ -10,9 +10,7 @@ import com.java.entity.Review;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {	
 
-
-
 	
-
+	
 
 }

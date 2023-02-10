@@ -85,23 +85,24 @@ public class SearchServiceImp implements SearchService {
 		String pageNumber = (String) map.get("pageNumber");
 		//JejuAspect.logger.info(JejuAspect.logMsg + tagValue + " || " + tagType);
 		
-		//Map<String, Object> map = new HashMap<String, Object>();
-		map.put("tagValue", tagValue);
-		map.put("tagType", tagType);
 		
 		int count = 0;
 		
-		if (tagValue.equals("adrr")) {
+		if (tagValue.equals("adrr") || tagType.equals("adrr")) {
 			count = foodRepository.addrtagListCount(tagValue, tagType);
-		} else if ( tagValue.equals("menu") ) {
+		} else if ( tagValue.equals("menu") || tagType.equals("menu") ) {
 			count = foodRepository.menutagListCount(tagValue, tagType);
-		} else if ( tagValue.equals("kind") ) {
+		} else if ( tagValue.equals("kind") || tagType.equals("kind") ) {
 			count = foodRepository.kindtagListCount(tagValue, tagType);
-		} else if ( tagValue.equals("area") ) {
+		} else if ( tagValue.equals("area") || tagType.equals("area") ) {
 			count = foodRepository.areatagListCount(tagValue, tagType);
-		} else if ( tagValue.equals("tag") ) {
+		} else if ( tagValue.equals("tag") || tagType.equals("tag") ) {
 			count = foodRepository.tagtagListCount(tagValue, tagType);
 		} 
+		
+		//Map<String, Object> map1 = new HashMap<String, Object>();
+		map.put("tagValue", tagValue);
+		map.put("tagType", tagType);
 		
 		//JejuAspect.logger.info(JejuAspect.logMsg + "tagListCount: " + count);
 		
@@ -120,11 +121,20 @@ public class SearchServiceImp implements SearchService {
 		List<SearchFoodDto> foodList = new ArrayList<SearchFoodDto>();
 		
 		if (count > 0 && count >= startRow) {
-			foodList = foodRepository.tagList(tagValue, tagType, startRow, endRow);
+			if (tagValue.equals("adrr") || tagType.equals("adrr")) {
+			foodList = foodRepository.addrtagList(tagValue, tagType, startRow, endRow);
 			//JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
+			} else if ( tagValue.equals("menu") || tagType.equals("menu") ) {
+				foodList = foodRepository.menutagList(tagValue, tagType, startRow, endRow);
+			} else if ( tagValue.equals("kind") || tagType.equals("kind") ) {
+				foodList = foodRepository.kindtagList(tagValue, tagType, startRow, endRow);
+			} else if ( tagValue.equals("area") || tagType.equals("area") ) {
+				foodList = foodRepository.areatagList(tagValue, tagType, startRow, endRow);
+			} else if ( tagValue.equals("tag") || tagType.equals("tag") ) {
+				foodList = foodRepository.tagtagList(tagValue, tagType, startRow, endRow);
+			} 
 		}
-		
-
+			
 		map.put("tagValue", tagValue);
 		map.put("tagType", tagType);
 		map.put("startRow", startRow);
@@ -172,15 +182,17 @@ public class SearchServiceImp implements SearchService {
 		
 		return jsonText;
 	}
-	
+	*/
 
-	//@Override
+	@Override
 	public int searchCount(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
 		
 		String keyword = (String) map.get("keyword");
 		String addrType = (String) map.get("addrType");
 		String kindType = (String) map.get("kindType");
+		
+		
 		
 		String[] addrArr = null;
 		String[] kindArr = null;
@@ -190,10 +202,22 @@ public class SearchServiceImp implements SearchService {
 		if (kindType != null) {
 			kindArr = kindType.split(",");
 		}
-		//JejuAspect.logger.info(JejuAspect.logMsg + "arrLength : " + kindArr.length);
-		int searchCount = foodRepository.searchCount(keyword, addrArr, kindArr);
-		//int searchCount = searchDao.searchCount(keyword, addrArr, kindArr);
 		
+		
+		//JejuAspect.logger.info(JejuAspect.logMsg + "arrLength : " + kindArr.length);
+		
+		int searchCount = 0;
+		
+		if (addrArr[0] != null) {
+			searchCount = foodRepository.addrsearchCount(keyword, addrArr, kindArr);
+		} else if (addrArr[0] != null) {
+			searchCount = foodRepository.kindsearchCount(keyword, addrArr, kindArr);
+		}
+		
+		map.put("keyword", keyword);
+		map.put("addrArr", addrArr);
+		map.put("kindArr", kindArr);
+		//int searchCount = searchDao.searchCount(keyword, addrArr, kindArr);
 		return searchCount;
 	}
 
@@ -225,6 +249,12 @@ public class SearchServiceImp implements SearchService {
 		int endRow = boardSize * pageNumber;
 		
 		int searchCount = foodRepository.searchCount(keyword, addrArr, kindArr);
+		
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		
+		map1.put("keyword", keyword);
+		map1.put("addrArr", addrArr);
+		map1.put("kindArr", kindArr);
 		
 		List<SearchFoodDto> searchResultList = new ArrayList<SearchFoodDto>();
 		if (searchCount > 0) {

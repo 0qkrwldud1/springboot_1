@@ -86,7 +86,7 @@ public class SearchController {
 			}
 		}
 	}
-	
+	*/
 	// 음식점 리스트 AJAX
 	@RequestMapping(value="/food/listAjax.go")
 	@ResponseBody
@@ -181,7 +181,7 @@ public class SearchController {
 		}	
 	}
 	
-	
+	/*
 	// 키워드 자동완성 AJAX
 	@RequestMapping(value = "/searchAutoAjax.do")
 	@ResponseBody
