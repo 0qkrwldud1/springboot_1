@@ -128,7 +128,7 @@ public class Coupon {
     @Column(name = "coupon_salerate", nullable = false, length = 20)
 	private int couponSalerate;
     
-    @Lob
+   
     @Column(name = "coupon_intro", length = 4000)
     private String couponIntro;
     

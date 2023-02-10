@@ -58,13 +58,13 @@ public class SearchServiceImp implements SearchService {
 		
 		// 쿠폰 수
 
-		int couponCount = foodRepository.countByKeywordLike(keyword);
+		int couponCount = foodRepository.couponCount(keyword);
 		//int couponCount = searchDao.couponCount(keyword);
 		//JejuAspect.logger.info(JejuAspect.logMsg + couponCount);
 		
 		List<SearchCouponDto> couponList = new ArrayList<SearchCouponDto>();
 		if (couponCount > 0) {
-			couponList = foodRepository.findByKeywordLike(keyword);
+			couponList = foodRepository.couponList(keyword);
 
 			//couponList = searchDao.couponList(keyword);
 		}
@@ -92,15 +92,15 @@ public class SearchServiceImp implements SearchService {
 		int count = 0;
 		
 		if (tagValue.equals("adrr") || tagType.equals("adrr")) {
-			count = foodRepository.addrtagListCount(tagValue, tagType);
+			count = foodRepository.addrtagListCount(tagValue);
 		} else if ( tagValue.equals("menu") || tagType.equals("menu") ) {
-			count = foodRepository.menutagListCount(tagValue, tagType);
+			count = foodRepository.menutagListCount(tagValue);
 		} else if ( tagValue.equals("kind") || tagType.equals("kind") ) {
-			count = foodRepository.kindtagListCount(tagValue, tagType);
+			count = foodRepository.kindtagListCount(tagValue);
 		} else if ( tagValue.equals("area") || tagType.equals("area") ) {
-			count = foodRepository.areatagListCount(tagValue, tagType);
+			count = foodRepository.areatagListCount(tagValue);
 		} else if ( tagValue.equals("tag") || tagType.equals("tag") ) {
-			count = foodRepository.tagtagListCount(tagValue, tagType);
+			count = foodRepository.tagtagListCount(tagValue);
 		} 
 		
 		//Map<String, Object> map1 = new HashMap<String, Object>();
@@ -128,13 +128,13 @@ public class SearchServiceImp implements SearchService {
 			foodList = foodRepository.addrtagList(tagValue, startRow, endRow);
 			//JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
 			} else if ( tagValue.equals("menu") || tagType.equals("menu") ) {
-				foodList = foodRepository.menutagList(tagValue, tagType, startRow, endRow);
+				foodList = foodRepository.menutagList(tagValue, startRow, endRow);
 			} else if ( tagValue.equals("kind") || tagType.equals("kind") ) {
-				foodList = foodRepository.kindtagList(tagValue, tagType, startRow, endRow);
+				foodList = foodRepository.kindtagList(tagValue, startRow, endRow);
 			} else if ( tagValue.equals("area") || tagType.equals("area") ) {
-				foodList = foodRepository.areatagList(tagValue, tagType, startRow, endRow);
+				foodList = foodRepository.areatagList(tagValue, startRow, endRow);
 			} else if ( tagValue.equals("tag") || tagType.equals("tag") ) {
-				foodList = foodRepository.tagtagList(tagValue, tagType, startRow, endRow);
+				foodList = foodRepository.tagtagList(tagValue, startRow, endRow);
 			} 
 		}
 			
@@ -185,7 +185,7 @@ public class SearchServiceImp implements SearchService {
 		
 		return jsonText;
 	}
-	*/
+	
 
 	@Override
 	public int searchCount(ModelAndView mav) {
@@ -288,8 +288,9 @@ public class SearchServiceImp implements SearchService {
 		
 		return jsonText;
 	}
+	
 
-	/*
+	
 	@Override
 	public String popularList(ModelAndView mav) {
 		Map<String, Object> map = mav.getModelMap();
@@ -340,6 +341,6 @@ public class SearchServiceImp implements SearchService {
 		
 		return jsonText;
 	}
-	
 	*/
+	
 }

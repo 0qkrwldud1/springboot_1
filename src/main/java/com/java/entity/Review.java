@@ -39,7 +39,7 @@ public class Review {
 	private Food food;	// 음식점 코드
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "membe_code")
+	@JoinColumn(name = "member_code")
 	private Member member;	// 멤버 코드
 	
 	@CreationTimestamp
@@ -47,7 +47,6 @@ public class Review {
 	@Column(name = "review_date" ,nullable = false)
 	private Date reviewDate;	// 리뷰 등록일
 	
-	@Lob
 	@Column(name = "review_cont" ,nullable = false)
 	private String reviewCont;	// 리뷰 내용
 	

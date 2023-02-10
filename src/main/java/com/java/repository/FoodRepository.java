@@ -17,137 +17,49 @@ import com.java.entity.Coupon;
 public interface FoodRepository extends JpaRepository<Food, Long>
 	{
 	
+	
 	int countByFoodCode(String foodcode);
 	
-	// couponList, couponrepo
-	@Query(nativeQuery = true ,
-			value = "select * from coupon as c "
-                    + "join food as f on c.food_code = f.food_code "
-                    + "AND coupon_name like %:keyword%"
-    				+ "OR food_name like %:keyword%"
-    				+ "OR food_kind like %:keyword%"
-    				+ "OR food_menu like %:keyword%"
-    				+ "OR food_tag like %:keyword%")
-	List<SearchCouponDto> findByKeywordLike(@Param("keyword") String keyword);
-	
-	// countQuery 쿼리전체개수세기 페이징처리용
-	@Query(nativeQuery = true ,
-			value = "select count(*) from coupon as c "
-                    + "join food as f on c.food_code = f.food_code "
-                    + "AND coupon_name like %:keyword%"
-    				+ "OR food_name like %:keyword%"
-    				+ "OR food_kind like %:keyword%"
-    				+ "OR food_menu like %:keyword%"
-    				+ "OR food_tag like %:keyword%")
-	int countByKeywordLike(@Param("keyword") String keyword);
+	@Query(name = "countByKeywordLike", nativeQuery = true)
+	int couponCount(@Param("keyword") String keyword);
    
-
-	@Query(nativeQuery = true ,
-			name = 
-	int addrtagListCount(@Param("tagValue")String foodAddr , String tagType);
+	@Query(name = "findByKeywordLike", nativeQuery = true)
+	List<SearchCouponDto> couponList(@Param("keyword") String keyword);
 	
-	@Query(nativeQuery = true ,
-			value = "select count(*) from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_menu like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)")
-	int menutagListCount(@Param("tagValue")String tagValue , @Param("tagType")String tagType);
+	@Query(name = "count_addrsearchfooddto", nativeQuery = true)
+	int addrtagListCount(@Param("tagValue")String foodAddr);
 	
-	@Query(nativeQuery = true ,
-			value = "select count(*) from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_kind like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)")
-	int kindtagListCount(@Param("tagValue")String tagValue , @Param("tagType")String tagType);
+	@Query(name = "count_menusearchfooddto", nativeQuery = true)
+	int menutagListCount(@Param("tagValue")String foodMenu);
 	
-	@Query(nativeQuery = true ,
-			value = "select count(*) from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_area like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)")
-	int areatagListCount(@Param("tagValue")String tagValue , @Param("tagType")String tagType);
+	@Query(name = "count_kindsearchfooddto", nativeQuery = true)
+	int kindtagListCount(@Param("tagValue")String foodKind);
 	
-	@Query(nativeQuery = true ,
-			value = "select count(*) from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_tag like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)")
-	int tagtagListCount(@Param("tagValue")String tagValue , @Param("tagType")String tagType);
+	@Query(name = "count_areasearchfooddto", nativeQuery = true)
+	int areatagListCount(@Param("tagValue")String foodArea);
 	
-	@Query(name = "find_searchfooddto", nativeQuery = true)
+	@Query(name = "find_tagsearchfooddto", nativeQuery = true)
+	int tagtagListCount(@Param("tagValue")String foodTag);
+	
+	
+	@Query(name = "find_addrsearchfooddto", nativeQuery = true)
 	List<SearchFoodDto> addrtagList(@Param("tagValue")String foodAddr, @Param("startRow")int startRow, @Param("endRow")int endRow);
 	
-	@Query(nativeQuery = true ,
-			value = "select * from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_menu like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)"
-					+ "where r rnum >= = :startRow "
-					+ "and rnum <= = :endRow")
-	List<SearchFoodDto> menutagList(@Param("tagValue")String tagValue , @Param("tagType")String tagType, int startRow, int endRow);
 	
-	@Query(nativeQuery = true ,
-			value = "select * from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_kind like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)"
-					+ "where r rnum >= = :startRow "
-					+ "and rnum <= = :endRow")
-	List<SearchFoodDto> kindtagList(@Param("tagValue")String tagValue , @Param("tagType")String tagType, int startRow, int endRow);
+	@Query(name = "find_menusearchfooddto", nativeQuery = true)
+	List<SearchFoodDto> menutagList(@Param("tagValue")String foodMenu , @Param("startRow")int startRow, @Param("endRow")int endRow);
 	
-	@Query(nativeQuery = true ,
-			value = "select * from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_area like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)"
-					+ "where r rnum >= = :startRow "
-					+ "and rnum <= = :endRow")
-	List<SearchFoodDto> areatagList(@Param("tagValue")String tagValue , @Param("tagType")String tagType, int startRow, int endRow);
 	
-	@Query(nativeQuery = true ,
-			value = "select * from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_tag like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)"
-					+ "where r rnum >= = :startRow "
-					+ "and rnum <= = :endRow")
-	List<SearchFoodDto> tagtagList(@Param("tagValue")String tagValue , @Param("tagType")String tagType, int startRow, int endRow);
+	@Query(name = "find_kindsearchfooddto", nativeQuery = true)
+	List<SearchFoodDto> kindtagList(@Param("tagValue")String foodKind , @Param("startRow")int startRow, @Param("endRow")int endRow);
 	
-	@Query(nativeQuery = true ,
-			value = "select count(*) from food where food_code in"
-					+ "(select distinct food_code from"
-					+ "(select food where food_name like %:keyword%"
-					+ "union all"
-					+ "select food where food_menu like %:keyword%"
-					+ "union all"
-					+ "select food where food_kind like %:keyword%"
-					+ "union all"
-					+ "select food where food_addr like %:keyword%"
-					+ "union all"
-					+ "and food_addr like %:addr%"
-					+ "and food_kind not like %:kind%")
-	int addrsearchCount(@Param("keyword")String keyword, @Param("addr")String[] addrArr, @Param("kind")String[] kindArr);
+	@Query(name = "find_areasearchfooddto", nativeQuery = true)
+	List<SearchFoodDto> areatagList(@Param("tagValue")String foodArea , @Param("startRow")int startRow, @Param("endRow")int endRow);
 	
-	@Query(nativeQuery = true ,
-			value = "select count(*) from food where food_code in"
-					+ "(select distinct food_code from"
-					+ "(select food where food_name like %:keyword%"
-					+ "union all"
-					+ "select food where food_menu like %:keyword%"
-					+ "union all"
-					+ "select food where food_kind like %:keyword%"
-					+ "union all"
-					+ "select food where food_addr like %:keyword%"
-					+ "union all"
-					+ "and food_kind like %:kind% "
-					+ "and food_kind not like %:addr%")
-	int kindsearchCount(@Param("keyword")String keyword, @Param("addr")String[] addrArr, @Param("kind")String[] kindArr);
+	@Query(name = "find_tagsearchfooddto", nativeQuery = true)
+	List<SearchFoodDto> tagtagList(@Param("tagValue")String foodTag , @Param("startRow")int startRow, @Param("endRow")int endRow);
+	
+	
+	
+	
 }
