@@ -80,6 +80,7 @@ import lombok.ToString;
 			+ "OR food_tag like %:keyword%"
 			+ "ORDERBY c.coupon_salerate DESC"
 			)
+
 	@SqlResultSetMapping(
 		    name = "findByKeywordLike",
 		    classes = @ConstructorResult(

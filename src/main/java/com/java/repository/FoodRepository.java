@@ -43,12 +43,8 @@ public interface FoodRepository extends JpaRepository<Food, Long>
    
 
 	@Query(nativeQuery = true ,
-			value = "select count(*) from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_addr like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)")
-	int addrtagListCount(@Param("tagValue")String tagValue , @Param("tagType")String tagType);
+			name = 
+	int addrtagListCount(@Param("tagValue")String foodAddr , String tagType);
 	
 	@Query(nativeQuery = true ,
 			value = "select count(*) from "
@@ -82,15 +78,8 @@ public interface FoodRepository extends JpaRepository<Food, Long>
 					+ "a, image where a.food_code = image.refer_code(+)")
 	int tagtagListCount(@Param("tagValue")String tagValue , @Param("tagType")String tagType);
 	
-	@Query(nativeQuery = true ,
-			value = "select * from "
-					+ "(select rownum rnum, a.*, image.* from"
-					+ "(select from food where food_addr like %:tagValue%"
-					+ "or like %:tagType%) orderby food_read desc)"
-					+ "a, image where a.food_code = image.refer_code(+)"
-					+ "where r rnum >= = :startRow "
-					+ "and rnum <= = :endRow")
-	List<SearchFoodDto> addrtagList(@Param("tagValue")String tagValue , @Param("tagType")String tagType, int startRow, int endRow);
+	@Query(name = "find_searchfooddto", nativeQuery = true)
+	List<SearchFoodDto> addrtagList(@Param("tagValue")String foodAddr, @Param("startRow")int startRow, @Param("endRow")int endRow);
 	
 	@Query(nativeQuery = true ,
 			value = "select * from "

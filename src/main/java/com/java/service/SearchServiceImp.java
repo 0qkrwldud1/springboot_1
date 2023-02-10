@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 //import com.java.aop.JejuAspect;
@@ -20,27 +18,32 @@ import com.java.dto.SearchFoodDto;
 import com.java.repository.CouponRepository;
 //import com.java.dao.SearchDao;
 import com.java.repository.FoodRepository;
-import com.java.repository.ReviewRepository;
 import com.java.repository.ImageRepository;
+import com.java.repository.ReviewRepository;
+
+import lombok.RequiredArgsConstructor;
 
 
-@Component
+@Service
+@RequiredArgsConstructor
+@Transactional
+
 public class SearchServiceImp implements SearchService {
 	
 	//@Autowired
 	//private SearchDao searchDao;
 	
 	@Autowired
-	private CouponRepository couponRepository;
+	private final CouponRepository couponRepository;
 	
 	@Autowired
-	private FoodRepository foodRepository;
+	private final FoodRepository foodRepository;
 	
 	@Autowired
-	private ReviewRepository reviewRepository;
+	private final ReviewRepository reviewRepository;
 	
 	@Autowired
-	private ImageRepository imageRepository;
+	private final ImageRepository imageRepository;
 
 	
 	//키워드 검색
@@ -121,8 +124,8 @@ public class SearchServiceImp implements SearchService {
 		List<SearchFoodDto> foodList = new ArrayList<SearchFoodDto>();
 		
 		if (count > 0 && count >= startRow) {
-			if (tagValue.equals("adrr") || tagType.equals("adrr")) {
-			foodList = foodRepository.addrtagList(tagValue, tagType, startRow, endRow);
+			if (tagValue.equals("adrr")) {
+			foodList = foodRepository.addrtagList(tagValue, startRow, endRow);
 			//JejuAspect.logger.info(JejuAspect.logMsg + foodList.size());
 			} else if ( tagValue.equals("menu") || tagType.equals("menu") ) {
 				foodList = foodRepository.menutagList(tagValue, tagType, startRow, endRow);
